@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.web.hydrology.mapper.FlowMeterDeviceMapper">
+
+    <select id="queryList" parameterType="FlowMeterDevice" resultType="FlowMeterDevice">
+        select * from hy_devices
+        order by create_time desc
+    </select>
+
+<!--地图展示锚点-->
+    <select id="jwdList" parameterType="FlowMeterDevice" resultType="FlowMeterDevice">
+        select * from hy_devices
+        order by create_time desc
+    </select>
+
+    <insert id="insert" parameterType="FlowMeterDevice">
+        insert into hy_devices (
+        <if test="id != null and id != '' ">id, </if>
+        <if test="deviceName != null and deviceName != '' ">device_name, </if>
+        <if test="deviceAlias != null and deviceAlias != '' ">device_alias, </if>
+        <if test="devicePwd != null and devicePwd != '' ">device_pwd, </if>
+        <if test="location != null and location != '' ">location, </if>
+        <if test="remark != null and remark != '' ">remark, </if>
+        <if test="binding != null and binding != '' ">binding, </if>
+        create_time
+        )values(
+        <if test="id != null and id != ''">#{id}, </if>
+        <if test="deviceName != null and deviceName != ''">#{deviceName}, </if>
+        <if test="deviceAlias != null and deviceAlias != ''">#{deviceAlias}, </if>
+        <if test="devicePwd != null and devicePwd != ''">#{devicePwd}, </if>
+        <if test="location != null and location != ''">#{location}, </if>
+        <if test="remark != null and remark != ''">#{remark}, </if>
+        <if test="binding != null and binding != ''">#{binding}, </if>
+        sysdate()
+        )
+    </insert>
+
+<!--    更新设备状态-->
+    <update id="binding" parameterType="FlowMeterDevice">
+        update hy_devices
+        <set>
+            <if test="binding != null and binding != ''">binding = #{binding}, </if>
+            update_time = sysdate()
+        </set>
+        where id = #{id}
+    </update>
+
+<!--    遍历所有设备-->
+    <select id="deviceList" parameterType="FlowMeterDevice" resultType="FlowMeterDevice">
+        select * from hy_devices
+        order by create_time desc
+    </select>
+</mapper>

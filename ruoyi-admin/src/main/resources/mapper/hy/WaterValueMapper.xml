@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.web.hydrology.mapper.WaterValueMapper">
+
+<!--    水表示值数据表-->
+
+    <select id="queryList" parameterType="WaterValue" resultType="WaterValue">
+        select * from hy_watervalue
+        <where>
+            <if test="watermeterName != null and watermeterName != ''">
+                AND watermeter_name like concat('%', #{watermeterName}, '%')
+            </if>
+        </where>
+        order by reading_date desc
+    </select>
+
+    <select id="getByCount" parameterType="Integer" resultType="Integer">
+        select count(*) from hy_watervalue
+        <where>
+            reading_date = #{readingDate} and  watermeter_id=#{watermeterId}
+        </where>
+    </select>
+
+</mapper>
